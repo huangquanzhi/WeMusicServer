@@ -13,7 +13,7 @@ app.post('/upload', function(req, res){
     form.multiples = true;
 
     // store all uploads in the /uploads directory
-    form.uploadDir = path.join(__dirname, '/uploads');
+    form.uploadDir = path.join('/uploads');
 
     // every time a file has been uploaded successfully,
     // rename it to it's orignal name
@@ -28,6 +28,7 @@ app.post('/upload', function(req, res){
 
     // once all the files have been uploaded, send a response to the client
     form.on('end', function() {
+        console.log("Done")
         res.end('success');
     });
 
