@@ -12,6 +12,7 @@
     "express": "^4.14.0",
     "formidable": "^1.0.17",
     "fs": "0.0.1-security",
+    "mkdirp": "^0.5.1",
     "path": "^0.12.7"
   }
 }
