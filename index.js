@@ -1,9 +1,9 @@
 var express = require('express');
 var app = express();
+var formidable = require('formidable');
 var cors = require('cors');
 var path = require('path');
 var mkdirp = require('mkdirp');
-var formidable = require('formidable');
 var fs = require('fs');
 
 app.set('port', 8888 || 3000);
@@ -18,6 +18,9 @@ app.post('/upload', function (req, res) {
     // specify that we want to allow the user to upload multiple files in a single request
     form.multiples = true;
 
+    // keep the extension of the file
+    form.keepExtensions = true;
+
     // store all uploads in the /uploads directory
     form.uploadDir = path.join(__dirname, '/uploads', userPath);
 
@@ -26,9 +29,7 @@ app.post('/upload', function (req, res) {
     form.on('file', function (field, file) {
 
         mkdirp(path.join(form.uploadDir), function (err) {
-            if (!err) {
-                console.log("Folder Exist, no need to create!");
-            } else {
+            if (err) {
                 console.log(err);
             }
         });
@@ -41,7 +42,8 @@ app.post('/upload', function (req, res) {
 
     // once all the files have been uploaded, send a response to the client
     form.on('end', function () {
-        res.send(200);
+        console.log("Upload completed!");
+        //res.writeHead(200, {'content-type': 'text/plain'});
     });
 
     // parse the incoming request containing the form data
