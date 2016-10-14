@@ -1,14 +1,14 @@
 var express = require('express');
 var app = express();
+var cors = require('cors');
 var path = require('path');
 var formidable = require('formidable');
 var fs = require('fs');
 
-app.get('/', function(req,res){
-   res.send("GFettt");
-});
+app.set('port', 8888 || 3000);
+app.use(cors());
 
-app.post('/upload', function(req, res){
+app.post('/upload', function (req, res) {
     res.send("Incomeing request")
     // create an incoming form object
     var form = new formidable.IncomingForm();
@@ -17,22 +17,22 @@ app.post('/upload', function(req, res){
     form.multiples = true;
 
     // store all uploads in the /uploads directory
-    form.uploadDir = path.join('/uploads');
+    form.uploadDir = path.join(__dirname, '/uploads');
 
     // every time a file has been uploaded successfully,
     // rename it to it's orignal name
-    form.on('file', function(field, file) {
+    form.on('file', function (field, file) {
         console.log("File added");
         fs.rename(file.path, path.join(form.uploadDir, file.name));
     });
 
     // log any errors that occur
-    form.on('error', function(err) {
+    form.on('error', function (err) {
         console.log('An error has occured: \n' + err);
     });
 
     // once all the files have been uploaded, send a response to the client
-    form.on('end', function() {
+    form.on('end', function () {
         console.log("Done")
         res.end(200);
     });
@@ -42,6 +42,6 @@ app.post('/upload', function(req, res){
 
 });
 
-var server = app.listen(6666, function(){
-    console.log('Server listening on port 6666');
+var server = app.listen(app.get('port'), function () {
+    console.log('Server listening on port ' + app.get('port'));
 });
