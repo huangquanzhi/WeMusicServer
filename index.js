@@ -47,7 +47,7 @@ app.post('/upload', function (req, res) {
     // once all the files have been uploaded, send a response to the client
     form.on('end', function () {
         console.log("Upload completed!");
-        //res.writeHead(200, {'content-type': 'text/plain'});
+        res.sendStatus(200);
     });
 
     // parse the incoming request containing the form data
