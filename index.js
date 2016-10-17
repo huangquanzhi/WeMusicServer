@@ -21,7 +21,7 @@ app.post('/upload', function (req, res) {
 
     // keep the extension of the file
     form.keepExtensions = true;
-
+        console.log(req.headers['authorization']);
     // make folder for new user
     mkdirp(userPath, function (err) {
         if (err) {
