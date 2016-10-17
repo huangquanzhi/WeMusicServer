@@ -33,10 +33,16 @@ app.post('/upload', function (req, res) {
     // store all uploads in the /uploads directory
     form.uploadDir = userPath;
 
-    // every time a file has been uploaded successfully,
-    // rename it to it's orignal name
-    form.on('file', function (field, file) {
-        console.log("File incoming")
+    // file received
+    form.on('file', function (name, file) {
+        console.log("===========File received===========");
+        console.log("Name: " + name + " File: " + file);
+    });
+
+    // field values received
+    form.on('field', function(name, value) {
+        console.log("===========Field received===========");
+        console.log("Name: " + name + " Value: " + value);
     });
 
     // log any errors that occur
