@@ -7,10 +7,11 @@ const api = require('./api');
 // verify jwt
 router.use(jwtMiddleware);
 
-router.post('/', (req, res) => {
-    api.uploadMusic(req.decoded.userID, files).then((data) => {
-        res.send({data});
+router.post('/upload', (req, res) => {
+    api.uploadMusic(req).then((data) => {
+        res.send({success: data.success, message: data.message});
     });
 });
+
 
 module.exports = router;

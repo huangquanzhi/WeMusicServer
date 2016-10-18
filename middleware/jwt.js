@@ -5,13 +5,15 @@ const config = require('../config');
 module.exports = (req, res, next) => {
     // grab authorization header
     const authHeader = req.headers['authorization'];
+
     // check header
     if (authHeader) {
         // get token
         const token = authHeader.split(' ')[1];
-        // verify token
-        jwt.verify(token, config.secret, (err, decoded) => {
-            // token not legit
+
+        // verify token 64BYTE ENCODE SECRET
+        jwt.verify(token, new Buffer(config.secret, 'base64'), {}, (err, decoded) => {
+            // token invalid
             if (err) {
                 return res.status(403).json({
                     success: false,
