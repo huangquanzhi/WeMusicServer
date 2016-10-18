@@ -13,6 +13,8 @@ module.exports = {
                 console.log("User Folder Created or exist");
                 // capture incoming
                 var form = new formidable.IncomingForm();
+                // store file path
+                var filePaths = [];
                 // allow multiple files
                 form.multiples = true;
                 // keep the extension of the file
@@ -26,7 +28,7 @@ module.exports = {
                 form.on('file', function (name, file) {
                     console.log("===========File received===========");
                     // create folder for each music
-
+                    console.log(name);
                     // extract temp file name from file path
                     var musicFileName = file.path.split("\\")[2];
                     // get music name
@@ -38,9 +40,15 @@ module.exports = {
                     // try to create music folder
                     song.createMusicFolders(musicPath).then(() => {
                         console.log("Music Folders Created or exist");
-                        // move music from temp folder to music folder
-                        // rename to song.Extension
-                        fs.rename(file.path, path.join(musicPath, "song" + "." + musicExt));
+                        // store music path
+                        filePaths.push(musicPath);
+                        if (name == "uploads[]") {
+                            // move music from temp folder to music folder
+                            // rename to song.Extension
+                            fs.rename(file.path, path.join(musicPath, "song" + "." + musicExt));
+                        } else if (name == "covers[]") {
+                            fs.rename(file.path, path.join(musicPath, "cover" + "." + musicExt));
+                        }
                     }).catch((err) => {
                         reject({success: false, message: err});
                     })
