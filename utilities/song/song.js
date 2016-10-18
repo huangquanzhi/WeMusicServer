@@ -40,7 +40,7 @@ module.exports = {
             }
         });
     },
-    uploadMusic: function (musicPath, files) {
+    moveMusic: function (oldPath, newPath) {
 
         // capture incoming forms
         var form = new formidable.IncomingForm();

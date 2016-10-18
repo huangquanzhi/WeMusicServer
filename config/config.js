@@ -7,7 +7,8 @@ module.exports = {
         port: 8888
     },
     path: {
-        music: '/WeMusicTemp',
+        temp: '/WeMusicTempCache',
+        music: '/WeMusicTemp/music',
     },
     secret: '_0xsuB_mv261p5nzG0eZtpR_4PSB06rAOba5XSA1kSMzlv5DmdhyjMqgeSagBxAb'
 };
