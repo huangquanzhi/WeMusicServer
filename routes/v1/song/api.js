@@ -6,12 +6,9 @@ var song = require('../../../utilities/song');
 
 module.exports = {
     uploadMusic: function (req) {
-        return new Promise((resolve) => {
-            const userID = req.userID;
-            console.log(userID);
-           // song.createUserFolder(userID);
-
-
+        const userID = req.userID;
+        return song.createUserFolder(userID).then((data) => {
+            console.log("Created or exist");
             resolve({success: true, message: userID, a: "Music upload successful!"});
         });
     },
