@@ -6,15 +6,16 @@ module.exports = {
     createUserFolder: function (userID) {
         return new Promise((resolve, reject) => {
             var musicPath = config.path.music;
-            console.log(musicPath)
+            // user path to create
             var userPath = musicPath + "/" + userID;
 
             try {
+                // try to create folder
                 mkdirp(userPath, function (err) {
                     if (err) {
                         reject("User Folder Creation Error: " + err);
                     } else {
-                        resolve();
+                        resolve(userPath);
                     }
                 });
             } catch (e) {
@@ -22,22 +23,20 @@ module.exports = {
             }
         });
     },
-    createMusicFolder: function (userPath, musicName) {
+    createMusicFolders: function (musicPath) {
         return new Promise((resolve, reject) => {
-            var musicPath = config.path.music;
-            console.log(musicPath)
-            var userPath = musicPath + "/" + userID;
-
+            console.log("Paht:" + musicPath)
+            console.log("Creating music folder")
             try {
-                mkdirp(userPath, function (err) {
+                mkdirp(musicPath, function (err) {
                     if (err) {
-                        reject("User Folder Creation Error: " + err);
+                        reject("Music Folder Creation Error: " + err);
                     } else {
                         resolve();
                     }
                 });
             } catch (e) {
-                reject("User Folder Error: " + e.message);
+                reject("Music Folder Error: " + e.message);
             }
         });
     },
