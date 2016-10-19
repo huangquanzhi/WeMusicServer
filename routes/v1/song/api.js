@@ -54,6 +54,12 @@ module.exports = {
                     })
                 });
 
+                // every field received
+                form.on('field', function (name, value) {
+                    console.log("Field:" + name);
+                    console.log("Value:" + value);
+                });
+
             })
         }).catch((err) => {
             throw {success: false, message: err};
