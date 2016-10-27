@@ -22,53 +22,65 @@ module.exports = {
                 // upload folder
                 form.uploadDir = config.path.temp;
                 // parse request
-                form.parse(req);
-
-                // every file received
-                form.on('file', function (name, file) {
+                form.parse(req, function (err, fields, files) {
+                    console.log("Fields: " + fields);
+                    console.log("Files: " + files);
                     console.log("===========File received===========");
-                    // create folder for each music
-                    console.log(name);
-                    // extract temp file name from file path
-                    var musicFileName = file.path.split("\\")[2];
-                    // get music name
-                    var musicName = musicFileName.split(".")[0];
-                    // get music extension
-                    var musicExt = musicFileName.split(".")[1];
+                    switch (1) {
+                        case "uploads[]":
 
-                    var musicPath = userPath + "/" + musicName;
-                    // try to create music folder
-                    song.createMusicFolders(musicPath).then(() => {
-                        console.log("Music Folders Created or exist");
-                        // store music path
-                        filePaths.push(musicPath);
-                        if (name == "uploads[]") {
-                            // move music from temp folder to music folder
-                            // rename to song.Extension
-                            fs.rename(file.path, path.join(musicPath, "song" + "." + musicExt));
-                        } else if (name == "covers[]") {
-                            fs.rename(file.path, path.join(musicPath, "cover" + "." + musicExt));
-                        }
-                    }).catch((err) => {
-                        reject({success: false, message: err});
-                    })
+                            break;
+                        case "covers[]":
+
+                            break;
+                        case "names[]":
+
+                            break;
+                        case "authors[]":
+
+                            break;
+                    }
                 });
 
-                // every field received
-                form.on('field', function (name, value) {
-                    console.log("Field:" + name);
-                    console.log("Value:" + value);
-                });
 
-            })
-        }).catch((err) => {
-            throw {success: false, message: err};
-        });
-    },
-    uploadCovers: function (userID, covers) {
+                // create folder for each music
+                // extract temp file name from file path
+                // var musicFileName = file.path.split("\\")[2];
+                // // get music name
+                // var musicName = musicFileName.split(".")[0];
+                // // get music extension
+                // var musicExt = musicFileName.split(".")[1];
+                //
+                // var musicPath = userPath + "/" + musicName;
+                // // try to create music folder
+                // song.createMusicFolders(musicPath).then(() => {
+                //     console.log("Music Folders Created or exist");
+                //     // store music path
+                //     filePaths.push(musicPath);
+                //     if (name == "uploads[]") {
+                //         // move music from temp folder to music folder
+                //         // rename to song.Extension
+                //         fs.rename(file.path, path.join(musicPath, "song" + "." + musicExt));
+                //     } else if (name == "covers[]") {
+                //         fs.rename(file.path, path.join(musicPath, "cover" + "." + musicExt));
+                //     }
+                // }).catch((err) => {
+                //     reject({success: false, message: err});
+                // })
 
-    },
-    insertFields: function (userID, fields) {
-
+        })
     }
-};
+).
+catch((err) => {
+    throw {success: false, message: err};
+});
+},
+uploadCovers: function (userID, covers) {
+
+}
+,
+insertFields: function (userID, fields) {
+
+}
+}
+;
